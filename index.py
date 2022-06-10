@@ -24,10 +24,7 @@ def all_routes(text):
         "x-app-version": "1.0.0"
     }
     print(Fore.GREEN)
-    print({
-        "user-agent": "Barq MITM",
-        "x-app-version": "1.0.0"
-    })
+    print(headers)
 
     print(Fore.RED)
     print(request.data)
@@ -55,10 +52,7 @@ def home():
         "x-app-version": "1.0.0"
     }
     print(Fore.GREEN)
-    print({
-        "user-agent": "Barq MITM",
-        "x-app-version": "1.0.0"
-    })
+    print(headers)
 
     print(Fore.RED)
     print(request.data)
