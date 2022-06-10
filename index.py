@@ -24,7 +24,10 @@ def all_routes(text):
         "x-app-version": "1.0.0"
     }
     print(Fore.GREEN)
-    print(headers)
+    print({
+        "user-agent": "Barq MITM",
+        "x-app-version": "1.0.0"
+    })
 
     print(Fore.RED)
     print(request.data)
@@ -52,7 +55,10 @@ def home():
         "x-app-version": "1.0.0"
     }
     print(Fore.GREEN)
-    print(headers)
+    print({
+        "user-agent": "Barq MITM",
+        "x-app-version": "1.0.0"
+    })
 
     print(Fore.RED)
     print(request.data)
@@ -73,4 +79,5 @@ def home():
 # run flask i guess
 if __name__ == '__main__':
     
+    print(Fore.GREEN + Style.BRIGHT + "Barq MITM running on " + localIP + ":80" + Style.RESET_ALL)
     app.run(port=80, host=localIP)
