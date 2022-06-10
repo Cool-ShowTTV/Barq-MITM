@@ -6,6 +6,9 @@ import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
+import socket
+localIP = socket.gethostbyname(socket.gethostname())
+
 from colorama import Fore, Back, Style, init
 init()
 
@@ -70,4 +73,4 @@ def home():
 # run flask i guess
 if __name__ == '__main__':
     
-    app.run(port=80, host='192.168.56.1')
+    app.run(port=80, host=localIP)
