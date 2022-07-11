@@ -12,7 +12,7 @@ localIP = socket.gethostbyname(socket.gethostname())
 from colorama import Fore, Back, Style, init
 init()
 
-url = "https://api.barq.social"
+url = "https://api.barq.app"
 logOut = False
 
 @app.route('/<path:text>', methods=['GET', 'POST'])
