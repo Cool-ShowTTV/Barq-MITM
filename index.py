@@ -17,6 +17,7 @@ init()
 
 url = "https://api.barq.app"
 logOut = False
+version = "1.1.1"
 
 @app.route('/<path:text>', methods=['GET', 'POST'])
 def all_routes(text):
@@ -75,12 +76,12 @@ def home():
 
     # This is used for the feed back on the Dev page
     #  You can set "host" and "version" to whatever you want and it will show up on the Dev page
-    return '{"host":"MITM by @Cool_Show","hostname":"MITM by @Cool_Show","version":"MITM V1.1.0","buildVersion":"MITM V1.1.0"}'
+    return '{"host":"MITM by @Cool_Show","hostname":"MITM by @Cool_Show","version":"MITM V'+version+'","buildVersion":"MITM V'+version+'"}'
 
 
 
 # run flask i guess
 if __name__ == '__main__':
     port=5000
-    print(Fore.GREEN + Style.BRIGHT + f'Barq MITM running on {localIP}:{port}' + Style.RESET_ALL)
+    print(Fore.GREEN + Style.BRIGHT + f'Barq MITM v{version} running on {localIP}:{port}' + Style.RESET_ALL)
     app.run(port=port, host=localIP)
