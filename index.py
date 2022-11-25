@@ -6,8 +6,11 @@ import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-import socket
-localIP = socket.gethostbyname(socket.gethostname())
+if input("Do you want auto local IP (has problems)? (y/n): ") == "y":
+    localIP = __import__("socket").gethostbyname(__import__("socket").gethostname())
+else:
+    localIP = input("What is a local IP that this divice has?: ") # "192.168.1.168"
+
 
 from colorama import Fore, Back, Style, init
 init()
@@ -21,10 +24,13 @@ def all_routes(text):
         "authorization": request.headers.get('authorization'),
         "Content-Type": request.headers.get('content-type'),
         "user-agent": "Barq MITM",
-        "x-app-version": "1.0.0"
+        "x-app-version": request.headers.get('x-app-version')
     }
     print(Fore.GREEN)
-    print(headers)
+    print({
+        "user-agent": "Barq MITM",
+        "x-app-version": "1.0.0"
+    })
 
     print(Fore.RED)
     print(request.data)
@@ -37,6 +43,7 @@ def all_routes(text):
         if logOut:
             print(rq)
         return rq
+
     else:
         rq = requests.get(f'{url}/{text}', headers=headers).text
         if logOut:
@@ -51,27 +58,29 @@ def home():
         "user-agent": "Barq MITM",
         "x-app-version": "1.0.0"
     }
+
+    # Only needed if they send a requests to the root
+    # But I haven't seen it yet
+    """
     print(Fore.GREEN)
-    print(headers)
+    print({
+        "user-agent": "Barq MITM",
+        "x-app-version": "1.0.0"
+    })
 
     print(Fore.RED)
     print(request.data)
     print("\n\n")
-    if request.method == 'POST':
-        rq = requests.post(f'{url}', data=request.data, headers=headers).text
-        if logOut:
-            print(rq)
-        return rq
-    else:
-        rq = requests.get(f'{url}', headers=headers).text
-        if logOut:
-            print(rq)
-        return rq
+    """
+
+    # This is used for the feed back on the Dev page
+    #  You can set "host" and "version" to whatever you want and it will show up on the Dev page
+    return '{"host":"MITM by @Cool_Show","hostname":"MITM by @Cool_Show","version":"MITM V1.1.0","buildVersion":"MITM V1.1.0"}'
 
 
 
 # run flask i guess
 if __name__ == '__main__':
-    
-    print(Fore.GREEN + Style.BRIGHT + "Barq MITM running on " + localIP + ":80" + Style.RESET_ALL)
-    app.run(port=80, host=localIP)
+    port=5000
+    print(Fore.GREEN + Style.BRIGHT + f'Barq MITM running on {localIP}:{port}' + Style.RESET_ALL)
+    app.run(port=port, host=localIP)
