@@ -2,6 +2,7 @@
 Very basic MITM server for the Barq app to get sent info
 
 ## How to use 
+___*If on Android you may need to do something to get around SSL stuff.*___
 
 First install the requirements then run index.py
 ```cmd
