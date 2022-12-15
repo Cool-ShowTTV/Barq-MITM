@@ -18,19 +18,20 @@ init()
 url = "https://api.barq.app"
 logOut = False
 version = "1.1.1"
+userAgent = "Barq MITM"
 
 @app.route('/<path:text>', methods=['GET', 'POST'])
 def all_routes(text):
     headers = {
         "authorization": request.headers.get('authorization'),
         "Content-Type": request.headers.get('content-type'),
-        "user-agent": "Barq MITM",
+        "user-agent": userAgent,
         "x-app-version": request.headers.get('x-app-version')
     }
     print(Fore.GREEN)
     print({
-        "user-agent": "Barq MITM",
-        "x-app-version": "1.0.0"
+        "user-agent": userAgent,
+        "x-app-version": version
     })
 
     print(Fore.RED)
@@ -53,16 +54,16 @@ def all_routes(text):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    headers = {
-        "authorization": request.headers.get('authorization'),
-        "Content-Type": request.headers.get('content-type'),
-        "user-agent": "Barq MITM",
-        "x-app-version": "1.0.0"
-    }
-
     # Only needed if they send a requests to the root
     # But I haven't seen it yet
     """
+    headers = {
+        "authorization": request.headers.get('authorization'),
+        "Content-Type": request.headers.get('content-type'),
+        "user-agent": userAgent,
+        "x-app-version": version
+    }
+    
     print(Fore.GREEN)
     print({
         "user-agent": "Barq MITM",
