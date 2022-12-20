@@ -59,13 +59,6 @@ def home():
         "user-agent": userAgent,
         "x-app-version": "1.0.0"
     }
-
-    print(Fore.GREEN)
-    print({
-        "user-agent": userAgent,
-        "x-app-version": "1.0.0"
-    })
-
     print(Fore.RED)
     print(request.data)
     print("\n\n")
