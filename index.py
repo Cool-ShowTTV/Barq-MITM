@@ -16,9 +16,9 @@ from colorama import Fore, Back, Style, init
 init()
 
 url = "https://api.barq.app"
-logOut = False
-version = "1.1.1"
-userAgent = "Barq MITM"
+logOut = True
+version = "1.1.2"
+userAgent = "Barq MITM"	
 
 @app.route('/<path:text>', methods=['GET', 'POST'])
 def all_routes(text):
@@ -28,29 +28,25 @@ def all_routes(text):
         "user-agent": userAgent,
         "x-app-version": request.headers.get('x-app-version')
     }
-    print(Fore.GREEN)
-    print({
-        "user-agent": userAgent,
-        "x-app-version": version
-    })
+    data = ""
+    data = data + (Fore.GREEN)+"\n"
+    data = data + (str(request.headers))+"\n"
 
-    print(Fore.RED)
-    print(request.data)
+    data = data + (Fore.RED)+"\n"
+    data = data + (f'{request.method} {url}/{text} {request.data}')+"\n"
     #open text file and write to it
     with open("barq.txt", "w") as f:
-        f.write(str(request.data).replace("\\n", "\n"))    
-    print("\n\n")
+        f.write(str(request.data).replace("\\n", "\n"))
     if request.method == 'POST':
         rq = requests.post(f'{url}/{text}', data=request.data, headers=headers).text
-        if logOut:
-            print(rq)
-        return rq
-
     else:
         rq = requests.get(f'{url}/{text}', headers=headers).text
-        if logOut:
-            print(rq)
-        return rq
+    if logOut:
+        print(data)
+        print(Fore.RESET + "\n")
+        print(rq)
+    print("\n\n")
+    return rq
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -61,12 +57,12 @@ def home():
         "authorization": request.headers.get('authorization'),
         "Content-Type": request.headers.get('content-type'),
         "user-agent": userAgent,
-        "x-app-version": version
+        "x-app-version": "1.0.0"
     }
-    
+
     print(Fore.GREEN)
     print({
-        "user-agent": "Barq MITM",
+        "user-agent": userAgent,
         "x-app-version": "1.0.0"
     })
 
@@ -84,5 +80,5 @@ def home():
 # run flask i guess
 if __name__ == '__main__':
     port=5000
-    print(Fore.GREEN + Style.BRIGHT + f'Barq MITM v{version} running on {localIP}:{port}' + Style.RESET_ALL)
+    print(Fore.GREEN + Style.BRIGHT + f'Barq MITM v{version} running on http://{localIP}:{port}' + Style.RESET_ALL)
     app.run(port=port, host=localIP)
