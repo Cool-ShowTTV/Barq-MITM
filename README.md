@@ -2,9 +2,17 @@
 Very basic MITM server for the Barq app to get sent info
 
 ## How to use 
-First install the requirements then run index.py
+
+First install the requirements <sub>(I'm too lazy to make a requirements file)</sub>
+
 ```cmd
-python -m pip install flask requests logging colorama
+python -m pip install flask
+python -m pip install requests
+python -m pip install logging
+python -m pip install colorama
+```
+Then run the file
+```cmd
 python index.py
 ```
 Then follow the video below <br>
