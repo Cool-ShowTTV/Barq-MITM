@@ -36,7 +36,7 @@ def all_routes(text):
     data = data + (f'{request.method} {url}/{text} {request.data}')+"\n"
     #open text file and write to it
     with open("barq.txt", "w") as f:
-        f.write(str(request.data).replace("\\n", "\n"))
+        f.write(request.data.decode())
     if request.method == 'POST':
         rq = requests.post(f'{url}/{text}', data=request.data, headers=headers).text
     else:
@@ -50,25 +50,20 @@ def all_routes(text):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    # Only needed if they send a requests to the root
-    # But I haven't seen it yet
-    """
-    headers = {
+    APIVersion = requests.get('https://api.barq.app',headers={
         "authorization": request.headers.get('authorization'),
         "Content-Type": request.headers.get('content-type'),
         "user-agent": userAgent,
-        "x-app-version": "1.0.0"
-    }
-    print(Fore.RED)
-    print(request.data)
-    print("\n\n")
-    """
+        "x-app-version": request.headers.get('x-app-version')
+    }).json()['version']
 
     # This is used for the feed back on the Dev page
     #  You can set "host" and "version" to whatever you want and it will show up on the Dev page
-    return '{"host":"MITM by @Cool_Show","hostname":"MITM by @Cool_Show","version":"MITM V'+version+'","buildVersion":"MITM V'+version+'"}'
+    return f'{{"host":"MITM by @Cool_Show","hostname":"MITM by @Cool_Show","version":"MITM v{version}\nAPI: v{APIVersion}","buildVersion":"MITM v{version}\nAPI: v{APIVersion}"}}'
 
-
+@app.route('/favicon.ico', methods=['GET', 'POST'])
+def favicon():
+    return ''
 
 # run flask i guess
 if __name__ == '__main__':
